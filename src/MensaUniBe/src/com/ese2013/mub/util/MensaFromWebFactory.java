@@ -78,7 +78,11 @@ public class MensaFromWebFactory extends AbstractMensaFactory {
 		WeeklyMenuplan plan = new WeeklyMenuplan();
 		for (int i = 0; i < menus.length(); i++) {
 			JSONObject menu = menus.getJSONObject(i);
-			plan.add(parseMenu(menu));
+			Menu menuToAdd = parseMenu(menu);
+//			if (true){
+//				menuToAdd.getTitle()
+//			}
+			plan.add(menuToAdd);
 		}
 		return plan;
 	}

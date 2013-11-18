@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -82,9 +83,10 @@ public class DailyPlanFragment extends Fragment {
 				
 				setUpFavoriteButton(rel, mensa);
 				setUpMapButton(rel, mensa);
+//				setUpTranslateButton(rel, mensa);
 				
 				for (Menu menu : d.getMenus()) {
-					menuLayout.addView(new MenuView(container.getContext(), menu.getTitle(), menu.getDescription()));
+					menuLayout.addView(new MenuView(container.getContext(), menu));
 				}
 				if (HomeFragment.getShowAllByDay()) 
 					menuLayout.setVisibility(View.GONE);
@@ -96,6 +98,8 @@ public class DailyPlanFragment extends Fragment {
 		}
 		return rootView;
 	}
+	
+
 	public void setUpFavoriteButton(RelativeLayout rel, Mensa mensa){
 		ImageButton favorite = (ImageButton)rel.getChildAt(1);
 		
@@ -108,6 +112,12 @@ public class DailyPlanFragment extends Fragment {
 		map.setOnClickListener(new MapButtonListener(mensa, this));
 		map.setImageResource(R.drawable.ic_map);
 	}
+//	private void setUpTranslateButton(RelativeLayout rel, Mensa mensa) {
+//		Button translate = (Button) rel.getChildAt(3);
+//		translate.setOnClickListener(new TranslateButtonListener(mensa, this));
+//		
+//		
+//	}
 	public void refreshFavoriteView() {
 		((DrawerMenuActivity) getActivity()).refreshHomeActivity();
 		

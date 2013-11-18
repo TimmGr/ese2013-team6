@@ -2,16 +2,26 @@ package com.ese2013.mub;
 
 import java.util.Locale;
 
+import com.ese2013.mub.model.Menu;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MenuView extends LinearLayout {
 
-	public MenuView(Context context, String menuTitle, String menuDesc) {
+	private TextView menuTitleText;
+	private TextView menuDescView;
+
+	public MenuView(Context context, Menu menu) {
 		super(context);
+		
+		String menuTitle = menu.getTitle();
+		String menuDesc = menu.getDescription();
+		
 		setOrientation(VERTICAL);
 		setPadding(0, 0, 0, dimToPixels(R.dimen.menu_view_bottom_margin));
 
@@ -21,6 +31,7 @@ public class MenuView extends LinearLayout {
 		menuTitle = menuTitle.toUpperCase(Locale.getDefault());
 		setTitle(menuTitle);
 		setDescription(menuDesc);
+		setUpTranslateButton(context, menu);
 	}
 
 	public MenuView(Context context) {
@@ -32,14 +43,21 @@ public class MenuView extends LinearLayout {
 	}
 
 	private void setTitle(String menuTitle) {
-		TextView menuTitleText = (TextView) getChildAt(0);
+		menuTitleText = (TextView) findViewById(R.id.title_textview);
 		menuTitleText.setText(menuTitle);
 		menuTitleText.setBackgroundColor(getTitleColor(menuTitle));
 	}
 	
 	private void setDescription(String menuDesc) {
-		TextView menuDescView = (TextView) getChildAt(1);
+		menuDescView = (TextView) findViewById(R.id.desc_textview);
 		menuDescView.setText(menuDesc);
+	}
+	
+	private void setUpTranslateButton(Context context, Menu menu) {
+		// TODO Auto-generated method stub
+		System.out.println("Button set up");
+		Button translateButton = (Button) findViewById(R.id.translate_menu_button);
+		translateButton.setOnClickListener(new TranslateButtonListener(this));
 	}
 
 	// TODO there should be a cleaner way to map titles to colors
@@ -47,7 +65,7 @@ public class MenuView extends LinearLayout {
 		if (title.contains("VEGI") || title.contains("VEGETARISCH"))
 			return getResources().getColor(R.color.green);
 
-		if (title.contains("EINFACH GUT") || title.contains("TAGESGERICHT") || title.contains("WARMES SCHÜSSELGERICHT"))
+		if (title.contains("EINFACH GUT") || title.contains("TAGESGERICHT") || title.contains("WARMES SCHï¿½SSELGERICHT"))
 			return getResources().getColor(R.color.yellow);
 
 		return getResources().getColor(R.color.blue);

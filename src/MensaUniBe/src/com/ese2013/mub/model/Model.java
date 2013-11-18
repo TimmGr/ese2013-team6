@@ -2,6 +2,7 @@ package com.ese2013.mub.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class Model extends Observable {
 		dataSource.init(context);
 		ModelCreationTask task = new ModelCreationTask();
 		task.execute();
+		
 	}
 
 	public List<Mensa> getMensas() {

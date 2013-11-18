@@ -1,5 +1,12 @@
 package com.ese2013.mub.model;
 
+import com.memetix.mst.language.Language;
+import com.memetix.mst.translate.Translate;
+
+import android.os.AsyncTask;
+
+//import com.ese2013.mub.util.translate.TranslationTask;
+
 /**
  * Stores all data which make up a menu. Always created using the
  * Menu.MenuBuilder class.
@@ -7,6 +14,7 @@ package com.ese2013.mub.model;
 public class Menu {
 	private String title, description;
 	private Day date;
+	private String titleTranslated, descriptionTranslated;
 
 	/**
 	 * Creates a Menu from a given MenuBuilder. Is private to ensure that Menus
@@ -20,6 +28,8 @@ public class Menu {
 		this.title = builder.title;
 		this.description = builder.description;
 		this.date = builder.date;
+		this.titleTranslated = builder.titleTranslated;
+		this.descriptionTranslated = builder.descriptionTranslated;
 		//
 	}
 
@@ -33,6 +43,14 @@ public class Menu {
 
 	public Day getDate() {
 		return date;
+	}
+	
+	public String getTitleTranslated() {
+		return titleTranslated;
+	}
+
+	public String getDescriptionTranslated() {
+		return descriptionTranslated;
 	}
 
 	/**
@@ -78,6 +96,8 @@ public class Menu {
 		return "Menu { \n" + "  Title: " + title + "\n  Description: " + description + "\n  Date: " + getDateString()
 				+ " \n }";
 	}
+	
+	
 
 	/**
 	 * Standard builder class used to construct Menu objects.
@@ -85,6 +105,7 @@ public class Menu {
 	public static class MenuBuilder {
 		private static final String DEFAULT = "N//A";
 		private String title = DEFAULT, description = DEFAULT;
+		private String titleTranslated = DEFAULT, descriptionTranslated = DEFAULT;
 		private Day date;
 
 		public MenuBuilder setTitle(String title) {
@@ -94,6 +115,16 @@ public class Menu {
 
 		public MenuBuilder setDescription(String description) {
 			this.description = description;
+			return this;
+		}
+		
+		public MenuBuilder setDescriptionTranslated(String descriptionTranslated) {
+			this.descriptionTranslated = descriptionTranslated;
+			return this;
+		}
+		
+		public MenuBuilder setTitleTranslated(String titleTranslated) {
+			this.titleTranslated = titleTranslated;
 			return this;
 		}
 
@@ -106,4 +137,6 @@ public class Menu {
 			return new Menu(this);
 		}
 	}
+	
+		
 }

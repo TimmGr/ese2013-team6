@@ -207,6 +207,8 @@ public class MensaDataSource {
 			values.put(MenusTable.COL_TITLE, menu.getTitle());
 			values.put(MenusTable.COL_DESC, menu.getDescription());
 			values.put(MenusTable.COL_DATE, date);
+			values.put(MenusTable.COL_TITLE_TRANSLANTED, menu.getTitleTranslated());
+			values.put(MenusTable.COL_DESC_TRANSLANTED, menu.getDescriptionTranslated());
 			database.insert(MenusTable.TABLE_MENUS, null, values);
 			c = database.rawQuery("select last_insert_rowid()", null);
 			c.moveToFirst();
@@ -238,6 +240,8 @@ public class MensaDataSource {
 		final int POS_TITLE = c.getColumnIndex(MenusTable.COL_TITLE);
 		final int POS_DESC = c.getColumnIndex(MenusTable.COL_DESC);
 		final int POS_DATE = c.getColumnIndex(MenusTable.COL_DATE);
+		final int POS_TITLE_TRANSLANTED = c.getColumnIndex(MenusTable.COL_TITLE_TRANSLANTED);
+		final int POS_DESC_TRANSLANTED = c.getColumnIndex(MenusTable.COL_DESC_TRANSLANTED);
 		WeeklyMenuplan p = new WeeklyMenuplan();
 		c.moveToFirst();
 		do {
@@ -246,6 +250,8 @@ public class MensaDataSource {
 				builder.setTitle(c.getString(POS_TITLE));
 				builder.setDescription(c.getString(POS_DESC));
 				builder.setDate(new Day(fm.parse(c.getString(POS_DATE))));
+				builder.setTitleTranslated(c.getString(POS_TITLE_TRANSLANTED));
+				builder.setDescriptionTranslated(c.getString(POS_DESC_TRANSLANTED));
 				p.add(builder.build());
 			} catch (ParseException e) {
 				throw new AssertionError("Database did not save properly");
