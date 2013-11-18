@@ -71,6 +71,7 @@ public class MensaFromWebFactory extends AbstractMensaFactory {
 	private WeeklyMenuplan createWeeklyMenuplan(Mensa m) throws IOException, JSONException, ParseException {
 		MensaWebserviceJsonRequest menuRequest = new MensaWebserviceJsonRequest(ServiceUri.GET_WEEKLY_MENUPLAN.replaceFirst(":id", "" + m.getId()));
 		JSONArray menus = menuRequest.execute().getJSONObject("result").getJSONObject("content").getJSONArray("menus");
+//		System.out.println("Menus: " + menus.toString(4));
 		return parseWeeklyMenuplan(menus);
 	}
 
@@ -79,11 +80,9 @@ public class MensaFromWebFactory extends AbstractMensaFactory {
 		for (int i = 0; i < menus.length(); i++) {
 			JSONObject menu = menus.getJSONObject(i);
 			Menu menuToAdd = parseMenu(menu);
-//			if (true){
-//				menuToAdd.getTitle()
-//			}
 			plan.add(menuToAdd);
 		}
+		
 		return plan;
 	}
 

@@ -21,8 +21,11 @@ import com.ese2013.mub.model.Day;
 import com.ese2013.mub.model.Mensa;
 import com.ese2013.mub.model.Menu;
 import com.ese2013.mub.model.Model;
+import com.ese2013.mub.util.OnTaskCompleted;
+import com.ese2013.mub.util.translate.ArrayTranslationTask;
+import com.memetix.mst.language.Language;
 
-public class DailyPlanFragment extends Fragment {
+public class DailyPlanFragment extends Fragment implements OnTaskCompleted {
 	private Day day;
 	private List<Mensa> mensas;
 
@@ -70,6 +73,34 @@ public class DailyPlanFragment extends Fragment {
 				noFavoriteMensasChosen.setText(R.string.no_favorite_mensa);
 				layout.addView(noFavoriteMensasChosen);
 		}
+		
+		String[] titleAndDesc = new String[1000];
+		int i=0;
+		System.out.println("mensas.size() " +mensas.size());
+		for (Mensa mensa : mensas) {
+			DailyMenuplan d = mensa.getMenuplan().getDailymenuplan(day);
+			System.out.println("d.getMenus().size() " +d.getMenus().size());
+			for (Menu menu : d.getMenus()) {
+				titleAndDesc[i] = menu.getTitle();
+				System.out.println("titleAndDesc["+i+"]: " +titleAndDesc[i]);
+				i++;
+				titleAndDesc[i] = menu.getDescription();
+				System.out.println("titleAndDesc["+i+"]: " +titleAndDesc[i]);
+				i++;
+			}
+		}
+		System.out.println("titleAndDesc["+0+"]: " +titleAndDesc[0]);
+		ArrayTranslationTask att = new ArrayTranslationTask(this, container, layout, inf, titleAndDesc, Language.ENGLISH, Language.GERMAN);
+		att.execute();
+		
+		
+		
+		init(container, layout, inf);
+		return rootView;
+	}
+
+	private void init(ViewGroup container, LinearLayout layout,
+			LayoutInflater inf) {
 		for (Mensa mensa : mensas) {
 			
 				RelativeLayout rel = (RelativeLayout)inf.inflate(R.layout.daily_section_title_bar, null);
@@ -85,8 +116,11 @@ public class DailyPlanFragment extends Fragment {
 				setUpMapButton(rel, mensa);
 //				setUpTranslateButton(rel, mensa);
 				
+				
+				
 				for (Menu menu : d.getMenus()) {
-					menuLayout.addView(new MenuView(container.getContext(), menu));
+					
+					menuLayout.addView(new MenuView(container.getContext(), menu.getTitle(), menu.getDescription()));
 				}
 				if (HomeFragment.getShowAllByDay()) 
 					menuLayout.setVisibility(View.GONE);
@@ -96,7 +130,6 @@ public class DailyPlanFragment extends Fragment {
 				layout.addView(rel);
 				layout.addView(menuLayout);
 		}
-		return rootView;
 	}
 	
 
@@ -133,5 +166,23 @@ public class DailyPlanFragment extends Fragment {
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
+	}
+
+	@Override
+	public void onTaskCompleted(String[] translated, ViewGroup container, LinearLayout layout,
+			LayoutInflater inf) {
+		System.out.println("onTaskCompleted");
+		System.out.println("translated[0]: " + translated[0]);
+		int i=0;
+		for (Mensa mensa : mensas) {
+			DailyMenuplan d = mensa.getMenuplan().getDailymenuplan(day);
+			for (Menu menu : d.getMenus()) {
+				menu.setTitle(translated[i]);
+				i++;
+				menu.setTitle(translated[i]);
+				i++;
+			}
+		}
+		init(container, layout, inf);
 	}
 }

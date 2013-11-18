@@ -16,11 +16,9 @@ public class MenuView extends LinearLayout {
 	private TextView menuTitleText;
 	private TextView menuDescView;
 
-	public MenuView(Context context, Menu menu) {
+	public MenuView(Context context, String menuTitle, String menuDesc) {
 		super(context);
 		
-		String menuTitle = menu.getTitle();
-		String menuDesc = menu.getDescription();
 		
 		setOrientation(VERTICAL);
 		setPadding(0, 0, 0, dimToPixels(R.dimen.menu_view_bottom_margin));
@@ -28,10 +26,10 @@ public class MenuView extends LinearLayout {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.menu_view, this);
 
-		menuTitle = menuTitle.toUpperCase(Locale.getDefault());
+//		menuTitle = menuTitle.toUpperCase(Locale.getDefault());
 		setTitle(menuTitle);
 		setDescription(menuDesc);
-		setUpTranslateButton(context, menu);
+		setUpTranslateButton();
 	}
 
 	public MenuView(Context context) {
@@ -53,7 +51,7 @@ public class MenuView extends LinearLayout {
 		menuDescView.setText(menuDesc);
 	}
 	
-	private void setUpTranslateButton(Context context, Menu menu) {
+	private void setUpTranslateButton() {
 		// TODO Auto-generated method stub
 		System.out.println("Button set up");
 		Button translateButton = (Button) findViewById(R.id.translate_menu_button);

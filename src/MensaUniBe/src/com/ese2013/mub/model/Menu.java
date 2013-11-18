@@ -99,6 +99,16 @@ public class Menu {
 	
 	
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
 	/**
 	 * Standard builder class used to construct Menu objects.
 	 */
