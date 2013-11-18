@@ -23,4 +23,5 @@
         android:src="@drawable/ic_map"
         android:layout_toLeftOf="@+id/section_title_fav_button"/>
 
+
 </RelativeLayout>
